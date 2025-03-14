@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ORIGEN: Zero-Shot 3D Orientation Grounding in Text-to-Image Generation</title>
+
+    <meta property='og:title' content='OriGen. arXiv2025'/>
+    <meta property='og:url' content='https://origen.github.io'/>
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/menlo" rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="stylesheet" href="./static/css/tab_gallery.css">
+    <link rel="stylesheet" href="./static/css/image_card_fader.css">
+    <link rel="stylesheet" href="./static/css/image_card_slider.css">
+    <link rel="icon" href="./static/images/orientation.ico">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+    <script src="./static/js/magnifier.js"></script>
+    <script type="text/javascript" async
+        src="https://polyfill.io/v3/polyfill.min.js?features=es6">
+    </script>
+    <script type="text/javascript" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+    <section class="hero banner">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-2 publication-title">ORIGEN: Zero-Shot 3D Orientation Grounding <br>in Text-to-Image Generation </h1>
+                        <div class="is-size-4 publication-authors">
+                            <span class="author-block">
+                                <a href="">Yunhong Min*</a>
+                            </span>
+                            <span class="author-block">
+                                <a href="https://choidaedae.github.io/">Daehyeon Choi*</a>
+                            </span><br>
+                            <span class="author-block">
+                                <a href="https://32v.github.io/">Kyeongmin Yeo</a>
+                            </span>
+                            <span class="author-block">
+                                <a href="https://jyunlee.github.io/">Jihyun Lee</a>
+                            </span>
+                            <span class="author-block">
+                                <a href="https://mhsung.github.io/">Minhyuk Sung</a>
+                            </span>
+                        </div>
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">KAIST</span><br>
+                            <span class="author-block">* equal contributions.</span>
+                        </div>
+                        <!--
+                        <div class="is-size-4 publication-authors">
+                            in <em>SIGGRAPH Asia 2024</em>
+                        </div>
+                         -->
+                      
+                        <div class="publication-links">
+                            <span class="link-block">
+                                <a href="" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="ai ai-arxiv"></i>
+                                    </span>
+                                    <span>arXiv</span>
+                                </a>
+                            </span>
+                            <span class="link-block">
+                                <a href="" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="fab fa-github"></i>
+                                    </span>
+                                    <span>Code</span>
+                                </a>
+                            </span>
+                            <span class="link-block">
+                                <a href="#bibtex" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="ai ai-obp"></i>
+                                    </span>
+                                    <span>BibTex</span>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="hero is-light is-small">
+        <div class="hero-body">
+            <h2 class="title is-3 has-text-centered">TL; DR</h2>
+            <div class="container is-max-desktop has-text-centered">
+                <h3 class="title is-5">We introduce ORIGEN, the first zero-shot method for 3D orientation grounding in <br>
+                    text-to-image generation across multiple objects and diverse categories. </h3>
+                <div class="content has-text-centered">
+                    <img src="./static/images/teaser.png" alt="ORIGEN Teaser" class="interpolation-image"/>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-3 has-text-centered">Abstract</h2>
+            <div class="columns is-centered">
+                <div class="column is-four-fifths">
+                    <div class="content has-text-justified">
+                        <p>
+                            We introduce ORIGEN, the first zero-shot method for 3D orientation grounding in text-to-image generation across multiple objects and diverse categories. 
+                            While previous work on spatial grounding in image generation has primarily focused on 2D positioning, it lacks control over 3D orientation.
+                            To address this, we propose a reward-guided sampling approach using a pretrained discriminative model for 3D orientation estimation and a one-step text-to-image generative flow model. 
+                            While gradient-ascent-based optimization is a natural choice for reward-based guidance, it struggles to maintain image realism. Instead, we adopt a sampling-based approach using Langevin dynamics, which extends gradient ascent by simply injecting random noise—requiring just a single additional line of code.
+                            Additionally, we introduce adaptive time rescaling based on the reward function to accelerate convergence. Our experiments show that ORIGEN outperforms both training-based and test-time guidance methods across quantitative metrics and user studies.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-3 has-text-centered">Method</h2>
+            <h3 class="title is-4">Orientation Grounding Reward</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/reward.jpg" alt="Orientation Grounding Reward" width="80%">
+            </div>
+            <div class="content has-text-justified">
+                <p>To formulate the <b>Orientation Grounding</b> problem as a <b>reward maximization</b> problem, we define the <b>Orientation Grounding Reward</b> for a given target 3D orientation and image I using negative KL divergence as follows: <br>
+                \[ \mathcal{R}(\mathbf{I}) = - \frac{1}{N} \sum_{i=1}^{N} D_{\text{KL}}\Big(\mathcal{D}\big(\mathrm{Crop}(\mathbf{I}, w_i)\big) \,\Big\|\, \Pi(\phi_i)\Big). \] <br>
+                Here, <b>\(\mathcal{D}\)</b> is the orientation estimation model (Orient-Anything), and <b>\(\mathrm{Crop}(\mathbf{I}, w_i)\)</b> extracts a centered object image using GroundingDINO, an open-set object detection model.
+                This reward function inherently supports <b>multi-object orientation grounding</b> by averaging rewards across multiple objects (N).</p>
+            </div>
+            <h3 class="title is-4">Reward-Adaptive Time scheduled Langevin Dynamics</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/langevin.jpg" alt="Reward-Adaptive Time scheduled Langevin Dynamics" width="100%">
+            </div>
+            <div class="content has-text-justified">
+                <p>
+                    We repeatedly solve Langevin dynamics to reach a stationary distribution that reflects the target reward. Additionally, we adaptively scale the step size (\(\gamma\)) based on the reward. Intuitively, this allows the system to stay longer in regions with high rewards while quickly escaping from regions with low rewards.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-3 has-text-centered">Experimental Results</h2>
+            <h3 class="title is-4">Experimental Setup</h3>
+            <div class="content has-text-justified">
+                <p>
+                    We introduce three benchmarks based on the MS-COCO dataset, that consist of diverse text prompts, image and ground truth orientations.<br>
+                    <b>1. MS-COCO-Single</b>: Single Object Scenario, total 1000 prompts, various azimuths.<br>
+                    <b>2. MS-COCO-Nview</b>: Single Object Scenario, total 252 prompts, and four views (front, left, back, right).<br>
+                    <b>3. MS-COCO-Multi</b>: Multi Object Scenario, total 371 prompts, various azimuths.
+                </p>
+            </div>
+            <h3 class="title is-4">Quantitative Results</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/quantitative.png" alt="Quantitative Results" width="50%">
+            </div>
+            <div class="content has-text-justified">
+                <p>
+                    We measure <b>orientation grounding accuracy</b> using two metrics: <br>
+                    <b>1) Absolute Error,</b> the absolute error on azimuth angles between the predicted and grounding object orientations. <br>
+                    <b>2) Acc.@22.5°,</b> the angular accuracy within a tolerance of ±22.5°. <br>
+                    For evaluation, we use OrientAnything to predict the 3D orientation from the generated images. <br>
+                    In the case of <b>text-image alignment,</b> we use three metrics: <b>CLIP Score, VQA-Score, and PickScore. </b>
+                </p>
+            </div>
+            <h3 class="title is-4">MS-COCO-Single</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/quali/ms_coco_single.png" alt="MS-COCO-Single" width="100%">
+            </div>
+            <div class="content has-text-justified">
+                <p>
+                    C3DW (Cheng et al.) is trained on synthetic data to learn orientation-to-image generation. Thus, it has limited generalizability to real-world images and the output images lack realism.
+                    Zero-1-to-3 (Liu et al.) is also trained on single-object images but without backgrounds, requiring additional background image composition that may introduce unnatrual artifacts.
+                    The existing methods (ReNO, FreeDoM) on guided generation methods also achieve suboptimal results compared to ORIGEN.
+                </p>
+            </div>
+            <h3 class="title is-4">MS-COCO-NView</h3>
+            <div class="content has-text-centered">
+                <div class="image-container">
+                    <img src="./static/images/quali/ms_coco_nview.png" alt="MS-COCO-NView" width="100%"> 
+                </div>
+            </div>
+            <div class="content has-text-justified">
+                <p>   
+                    ORIGEN outperforms all baseline models in orientation alignment. While FLUX-Schnell achieves the highest alignment among vanilla T2I models, ORIGEN surpasses it by over 2.5 times in the 3-view setting (82.4% vs. 31.2%) and over 2 times in the 4-view setting (86.6% vs. 42.4%). 
+                    This highlights the limitations of vanilla T2I models, which struggle with precise orientation control due to the ambiguity in textual descriptions. 
+                    Unlike these models, ORIGEN consistently generates images that accurately align with the specified orientations.
+                </p>
+            </div>
+            <h3 class="title is-4">MS-COCO-Multi</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/quali/ms_coco_multi.png" alt="MS-COCO-Multi" width="100%">
+            </div>
+            <div class="content has-text-justified">
+                <p>
+                    Our approach is seamlessly generalizable to multiple objects by simply averaging the orientation grounding reward across multiple objects.
+                </p>
+            </div>
+            <h3 class="title is-4">User Study</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/user_study.png" alt="User study results" width="50%">
+            </div>
+            <div class="content has-text-justified">
+                <p>
+                    The input prompt and images generated by three models (Zero-1-to-3, C3DW, and ORIGEN) were provided, and participants were asked to select the image that best reflected both the input prompt and the grounding orientation. 
+                    As a result, ORIGEN was preferred by 58.18% of the participants, outperforming the baseline models.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-3 has-text-centered">Additional Qualitative Results</h2>
+            <h3 class="title is-4">MS-COCO-Single</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/quali/ms_coco_single_additional.png" alt="General scenes" class="interpolation-image" />
+            </div>
+            <h3 class="title is-4">MS-COCO-NView</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/quali/ms_coco_nview_additional.png" alt="General scenes" class="interpolation-image" />
+            </div>
+
+            <h3 class="title is-4">MS-COCO-Multi</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/quali/ms_coco_multi_additional.png" alt="General scenes" class="interpolation-image" />
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <!--
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-3 has-text-centered">(Non-exhaustive) Related Works</h2>
+            <div class="content has-text-justified">
+                <ul>
+                    <li>Amazing drag-based editing works: <a href="https://arxiv.org/pdf/2305.10973">DragGAN</a>, <a href="https://arxiv.org/abs/2306.14435">DragDiffusion</a>, <a href="https://arxiv.org/abs/2307.02421">DragonDiffusion</a>, <a href="https://arxiv.org/abs/2312.02150">Readout Guidance</a>,  <a href="https://arxiv.org/abs/2311.01410">SDE-Drag</a>, and more! </li>
+                    <li>Another great concurrent work sharing similar motivation: <a href="https://arxiv.org/abs/2405.13722">LightningDrag</a> by Yujun Shi et al.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    -->
+
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+          <h2 class="title"><a id="bibtex">BibTeX</a></h2>
+          <pre><code>@inproceedings{min2025origen,
+      title     = {{ORIGEN}},
+      author    = {Min, Yunhong and Choi, Daehyeon and Yeo, Kyeongmin and Lee, Jihyun and Sung, Minhyuk},
+      booktitle = {Arxiv Preprint},
+      year      = {2025},
+      pages     = {1--10},
+}</code></pre>
+      </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p>
+                            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+                        </p>
+                        <p>
+                            Website adapted from <a href="https://github.com/nerfies/nerfies.github.io">nerfies</a> and <a href="https://joonghyuk.com/instantdrag-web/">InstantDrag</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
