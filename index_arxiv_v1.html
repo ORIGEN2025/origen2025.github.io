@@ -172,15 +172,15 @@
             <h3 class="title is-4">Experimental Setup</h3>
             <div class="content has-text-justified">
                 <p>
-                    We introduce ORIBENCH benchmark based on the MS-COCO dataset, that consist of diverse text prompts, image and ground truth orientations.<br>
-                    <b>1. ORIBENCH-Single</b>: Single Object Scenario, total 1000 prompts, various azimuths.<br>
-                    <b>2. ORIBENCH-Multi</b>: Multi Object Scenario, total 371 prompts, various azimuths.<br>
-                    For more evaluation (General Orientation, primitive views), please refer to the Appendix of the paper.
+                    We introduce three benchmarks based on the MS-COCO dataset, that consist of diverse text prompts, image and ground truth orientations.<br>
+                    <b>1. MS-COCO-Single</b>: Single Object Scenario, total 1000 prompts, various azimuths.<br>
+                    <b>2. MS-COCO-Nview</b>: Single Object Scenario, total 252 prompts, and four views (front, left, back, right).<br>
+                    <b>3. MS-COCO-Multi</b>: Multi Object Scenario, total 371 prompts, various azimuths.
                 </p>
             </div>
             <h3 class="title is-4">Quantitative Results</h3>
             <div class="content has-text-centered">
-                <img src="./static/images/quantitative_v2.png" alt="Quantitative Results" width="80%">
+                <img src="./static/images/quantitative.jpg" alt="Quantitative Results" width="50%">
             </div>
             <div class="content has-text-justified">
                 <p>
@@ -191,21 +191,21 @@
                     In the case of <b>text-image alignment,</b> we use three metrics: <b>CLIP Score</b>, <b>VQA-Score</b>, and <b>PickScore</b>.
                 </p>
             </div>
-            <h3 class="title is-4">ORIBENCH-Single</h3>
+            <h3 class="title is-4">MS-COCO-Single</h3>
             <div class="content has-text-centered">
-                <img src="./static/images/quali/quali_single_v2.png" alt="MS-COCO-Single" width="100%">
+                <img src="./static/images/quali/ms_coco_single.jpg" alt="MS-COCO-Single" width="100%">
             </div>
             <div class="content has-text-justified">
                 <p>
                     C3DW (Cheng et al.) is trained on synthetic data to learn orientation-to-image generation. Thus, it has limited generalizability to real-world images and the output images lack realism.
                     Zero-1-to-3 (Liu et al.) is also trained on single-object images but without backgrounds, requiring additional background image composition that may introduce unnatrual artifacts.
-                    The existing methods (DPS, MPGD, FreeDoM, ReNO) on guided generation methods also achieve suboptimal results compared to ORIGEN.
+                    The existing methods (ReNO, FreeDoM) on guided generation methods also achieve suboptimal results compared to ORIGEN.
                 </p>
             </div>
-            <h3 class="title is-4">ORIBENCH-Multi</h3>
+            <h3 class="title is-4">MS-COCO-NView</h3>
             <div class="content has-text-centered">
                 <div class="image-container">
-                    <img src="./static/images/quali/quali_multi_v2.png" alt="MS-COCO-NView" width="100%"> 
+                    <img src="./static/images/quali/ms_coco_nview.jpg" alt="MS-COCO-NView" width="100%"> 
                 </div>
             </div>
             <div class="content has-text-justified">
@@ -213,6 +213,15 @@
                     ORIGEN outperforms all baseline models in orientation alignment. While FLUX-Schnell achieves the highest alignment among vanilla T2I models, ORIGEN surpasses it by over 2.5 times in the 3-view setting (82.4% vs. 31.2%) and over 2 times in the 4-view setting (86.6% vs. 42.4%). 
                     This highlights the limitations of vanilla T2I models, which struggle with precise orientation control due to the ambiguity in textual descriptions. 
                     Unlike these models, ORIGEN consistently generates images that accurately align with the specified orientations.
+                </p>
+            </div>
+            <h3 class="title is-4">MS-COCO-Multi</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/quali/ms_coco_multi.jpg" alt="MS-COCO-Multi" width="100%">
+            </div>
+            <div class="content has-text-justified">
+                <p>
+                    Our approach is seamlessly generalizable to multiple objects by simply averaging the orientation grounding reward across multiple objects.
                 </p>
             </div>
             <h3 class="title is-4">User Study</h3>
@@ -231,21 +240,18 @@
     <section class="section">
         <div class="container is-max-desktop">
             <h2 class="title is-3 has-text-centered">Additional Qualitative Results</h2>
-            <h3 class="title is-4">ORIBENCH-Single</h3>
+            <h3 class="title is-4">MS-COCO-Single</h3>
             <div class="content has-text-centered">
-                <img src="./static/images/quali/quali_single_additional_v2.png" alt="General scenes" width="80%" class="interpolation-image" />
+                <img src="./static/images/quali/ms_coco_single_additional.jpg" alt="General scenes" class="interpolation-image" />
             </div>
-            <h3 class="title is-4">ORIBENCH-Multi</h3>
+            <h3 class="title is-4">MS-COCO-NView</h3>
             <div class="content has-text-centered">
-                <img src="./static/images/quali/quali_multi_additional_v2.png" alt="General scenes" width="80%" class="interpolation-image" />
+                <img src="./static/images/quali/ms_coco_nview_additional.jpg" alt="General scenes" class="interpolation-image" />
             </div>
-            <h3 class="title is-4">Additional - General Orientations</h3>
+
+            <h3 class="title is-4">MS-COCO-Multi</h3>
             <div class="content has-text-centered">
-                <img src="./static/images/quali/quali_general_additional_v2.png" alt="General scenes" width="80%" class="interpolation-image" />
-            </div>
-            <h3 class="title is-4">Additional - Primitive Views</h3>
-            <div class="content has-text-centered">
-                <img src="./static/images/quali/quali_primitive_additional_v2.png" alt="General scenes" width="80%" class="interpolation-image" />
+                <img src="./static/images/quali/ms_coco_multi_additional.jpg" alt="General scenes" class="interpolation-image" />
             </div>
           </div>
         </div>
