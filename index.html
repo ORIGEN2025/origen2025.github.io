@@ -150,16 +150,16 @@
             </div>
             <h3 class="title is-4">Reward-Adaptive Time-Rescaled Langevin SDE</h3>
             <div class="content has-text-centered">
-                <img src="./static/images/algorithm.jpg" alt="Reward-Adaptive Time-Rescaled Langevin SDE" width="50%">
+                <img src="./static/images/algorithm_v2.png" alt="Reward-Adaptive Time-Rescaled Langevin SDE" width="50%">
             </div>
             <div class="content has-text-justified">
                 <p>
                     We introduce <b>Reward-Guided Langevin Dynamics</b>, to efficiently sample a latent representation \(\mathbf{x}\) from the optimal reward-aligned distribution. Unlike traditional gradient ascent, which may get stuck in local optima, this approach incorporates stochasticity, leading to the following simple discretized update rule: <br>
-                    \[ \mathbf{x}_{i+1} = \sqrt{1-\gamma}\, (\mathbf{x}_i + \gamma\eta \nabla \hat{\mathcal{R}}(\mathbf{x}_i)) + \sqrt{\gamma} \epsilon_{i}. \]
+                    \[ \mathbf{x}_{i+1} = \sqrt{1-\gamma}\, \mathbf{x}_i + \gamma\eta \nabla \hat{\mathcal{R}}(\mathbf{x}_i) + \sqrt{\gamma} \epsilon_{i}. \]
                     Note that for implementation, this requires only <b>a single line of code</b>, to add Gaussian noise \(\epsilon_i \sim \mathcal{N}(0, \mathbf{I})\) to the latent representation. <br><br>
 
                     To further enhance convergence speed and performance, we introduce <b>Reward-Adaptive Time Rescaling</b>, modifying the Langevin process with a monitor function \(\mathcal{G}(\hat{\mathcal{R}}(\mathbf{x}))\) that dynamically adjusts the step size based on the reward: <br>
-                    \[ \mathbf{x}_{i+1} =\sqrt{1-\gamma(\mathbf{x}_i)}\Bigl(\mathbf{x}_i + \gamma(\mathbf{x}_i)\eta\,\nabla \hat{\mathcal{R}}(\mathbf{x}_i)\Bigr) + \frac{1}{2}\gamma(\mathbf{x}_i)\nabla\log \mathcal{G}(\hat{\mathcal{R}}(\mathbf{x}_i)) + \sqrt{\gamma(\mathbf{x}_i)}\,\epsilon_i. \]
+                    \[ \mathbf{x}_{i+1} =\sqrt{1-\gamma(\mathbf{x}_i)}\mathbf{x}_i + \gamma(\mathbf{x}_i)\eta\,\nabla \hat{\mathcal{R}}(\mathbf{x}_i) + \frac{1}{2}\gamma(\mathbf{x}_i)\nabla\log \mathcal{G}(\hat{\mathcal{R}}(\mathbf{x}_i)) + \sqrt{\gamma(\mathbf{x}_i)}\,\epsilon_i. \]
 
                 </p>
             </div>
